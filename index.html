@@ -12,9 +12,9 @@
     <link rel="apple-touch-icon" href="icon.png">
 
     <style>
-        /* Ensures the player fills the entire iPhone screen */
         * {
             -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
         }
         body, html { 
             margin: 0; 
@@ -22,11 +22,13 @@
             height: 100%; 
             width: 100%; 
             overflow: hidden; 
-            background-color: #000; 
+            background-color: #000;
+            display: flex;
+            flex-direction: column; /* Stacks player on top of the credit */
         }
         #player-container { 
+            flex-grow: 1; /* Takes up all available space except for the footer */
             width: 100vw; 
-            height: 100vh; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
@@ -35,11 +37,37 @@
             width: 100%;
             height: 100%;
         }
+        /* Modern Footer Design */
+        .footer {
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-bottom: env(safe-area-inset-bottom); /* Fix for iPhone Notch/Home Bar */
+        }
+        .footer p {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+        .footer b {
+            color: #fff;
+            margin-left: 4px;
+        }
     </style>
 </head>
 <body>
 
     <div id="player-container"></div>
+
+    <div class="footer">
+        <p>Developed By : <b>Didar Baxtear</b></p>
+    </div>
 
     <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
 
@@ -53,14 +81,13 @@
             container.appendChild(player);
 
             player.config = {
-                // Adjusts the scaling for mobile screens
                 letterbox: "on",
                 autoPlay: "on",
                 unmuteOverlay: "visible",
             };
 
             player.load({
-                url: "game.swf", // Path to your SWF file
+                url: "game.swf",
                 allowScriptAccess: true,
             });
         });
