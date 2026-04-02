@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Balloon Invasion</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Balloon Invasion">
+    
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <style>
+        /* Ensures the player fills the entire iPhone screen */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            width: 100%; 
+            overflow: hidden; 
+            background-color: #000; 
+        }
+        #player-container { 
+            width: 100vw; 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
+        ruffle-player {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="player-container"></div>
+
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+
+    <script>
+        window.RufflePlayer = window.RufflePlayer || {};
+        window.addEventListener("DOMContentLoaded", () => {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            const container = document.getElementById("player-container");
+            
+            container.appendChild(player);
+
+            player.config = {
+                // Adjusts the scaling for mobile screens
+                letterbox: "on",
+                autoPlay: "on",
+                unmuteOverlay: "visible",
+            };
+
+            player.load({
+                url: "game.swf", // Path to your SWF file
+                allowScriptAccess: true,
+            });
+        });
+    </script>
+</body>
+</html>
